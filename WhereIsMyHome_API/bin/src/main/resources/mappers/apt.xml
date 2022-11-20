@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.home.apt.dao.AptDao">
+
+
+	<select id="selectAll" resultType="AptDto" parameterType="string">
+		select aptCode, aptName, dongCode, dongName, buildYear, jibun, lat, lng, userid
+		from houseinfo
+		where dongCode = #{dongCode}
+	</select>
+
+
+	<insert id = "insertApt" parameterType = "AptDto">
+		insert into houseinfo
+		(aptCode, aptName, dongCode, dongName, buildYear, jibun, lat, lng, userid
+		values(#{aptCode}, #{aptName}, #{dongCode}, #{dongName}, 
+		#{buildYear}, #{jibun},#{lat}, #{userid})
+	</insert>
+	
+	
+	
+	<update id="modifyApt" parameterType="AptDto">
+		update houseinfo
+		<trim prefix="set" suffixOverrides=",">
+			<if test="aptCode != null">aptCode = #{aptCode},</if>		
+			<if test="aptName != null">aptName = #{aptName},</if>
+			<if test="dongCode != null">dongCode = #{dongCode},</if>
+			<if test="dongName != null">dongName = #{dongName},</if>
+			<if test="buildYear != null">buildYear = #{buildYear},</if>
+			<if test="jibun != null">jibun = #{jibun},</if>
+			<if test="lat != null">lat = #{lat},</if>
+			<if test="lng != null">lng = #{lng},</if>
+		</trim>
+		where userid = #{userid}
+	
+	</update>
+	
+	
+	<delete id="deleteApt" parameterType="AptDto">
+		delete from houseinfo
+		where userid = #{userid} and lat = #{lat} and lng = #{lng}
+	</delete>
+	
+</mapper>
